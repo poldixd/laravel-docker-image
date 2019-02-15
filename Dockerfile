@@ -8,7 +8,10 @@ RUN apk add --no-cache --virtual .build-deps \
     libtool \
     libxml2-dev \
     postgresql-dev \
-    sqlite-dev
+    sqlite-dev \
+    libmhash-dev \
+    libmcrypt-dev \
+    libgmp-dev
 
 # Install production dependencies
 RUN apk add --no-cache \
@@ -27,10 +30,7 @@ RUN apk add --no-cache \
     openssh-client \
     postgresql-libs \
     rsync \
-    libgmp-dev \
     re2c \
-    libmhash-dev \
-    libmcrypt-dev \
     file
 
 RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/
