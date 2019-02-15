@@ -26,7 +26,14 @@ RUN apk add --no-cache \
     nodejs-npm \
     openssh-client \
     postgresql-libs \
-    rsync
+    rsync \
+    libgmp-dev \
+    re2c \
+    libmhash-dev \
+    libmcrypt-dev \
+    file
+
+RUN ln -s /usr/include/x86_64-linux-gnu/gmp.h /usr/local/include/
 
 # Install PECL and PEAR extensions
 RUN pecl install \
@@ -42,9 +49,14 @@ RUN curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar > phpcbf &&
     mv phpcbf /usr/local/bin
 
 # Install and enable php extensions
+RUN docker-php-ext-configure \
+    gmp \
+    mcrypt
+
 RUN docker-php-ext-enable \
     imagick \
     xdebug
+
 RUN docker-php-ext-install \
     curl \
     iconv \
@@ -59,7 +71,8 @@ RUN docker-php-ext-install \
     gd \
     zip \
     bcmath \
-    gmp
+    gmp \
+    mcrypt
 
 # Install composer
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
