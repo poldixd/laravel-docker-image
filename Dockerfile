@@ -28,7 +28,11 @@ RUN apk add --no-cache \
     postgresql-libs \
     rsync \
     gmp \
-    gmp-dev
+    gmp-dev \
+    libwebp-dev \
+    libjpeg62-turbo-dev \
+    libxpm-dev \
+    libfreetype6-dev
 
 # Install PECL and PEAR extensions
 RUN pecl install \
@@ -43,10 +47,20 @@ RUN curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar > phpcbf &&
     chmod a+x phpcbf && \
     mv phpcbf /usr/local/bin
 
-# Install and enable php extensions
+RUN docker-php-ext-configure gd \
+    --with-gd \
+    --with-webp-dir \
+    --with-jpeg-dir \
+    --with-png-dir \
+    --with-zlib-dir \
+    --with-xpm-dir \
+    --with-freetype-dir \
+    --enable-gd-native-ttf
+
 RUN docker-php-ext-enable \
     imagick \
     xdebug
+
 RUN docker-php-ext-install \
     curl \
     iconv \
