@@ -29,10 +29,9 @@ RUN apk add --no-cache \
     rsync \
     gmp \
     gmp-dev \
-    libwebp-dev \
-    libjpeg62-turbo-dev \
-    libxpm-dev \
-    libfreetype6-dev
+    freetype-dev \
+    libjpeg-turbo-dev \
+    libpng-dev
 
 # Install PECL and PEAR extensions
 RUN pecl install \
@@ -48,14 +47,8 @@ RUN curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar > phpcbf &&
     mv phpcbf /usr/local/bin
 
 RUN docker-php-ext-configure gd \
-    --with-gd \
-    --with-webp-dir \
-    --with-jpeg-dir \
-    --with-png-dir \
-    --with-zlib-dir \
-    --with-xpm-dir \
-    --with-freetype-dir \
-    --enable-gd-native-ttf
+    --with-freetype-dir=/usr/include/ \
+    --with-jpeg-dir=/usr/include/
 
 RUN docker-php-ext-enable \
     imagick \
