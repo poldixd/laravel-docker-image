@@ -47,7 +47,6 @@ RUN curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar > phpcbf &&
 
 RUN docker-php-ext-configure \
     gd \
-    intl \
     --with-freetype-dir=/usr/include/ \
     --with-jpeg-dir=/usr/include/
 
