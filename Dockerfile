@@ -31,7 +31,8 @@ RUN apk add --no-cache \
     gmp-dev \
     freetype-dev \
     libjpeg-turbo-dev \
-    libpng-dev
+    zlib1g-dev \
+    libicu-dev
 
 # Install PECL and PEAR extensions
 RUN pecl install \
@@ -46,7 +47,9 @@ RUN curl -OL https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar > phpcbf &&
     chmod a+x phpcbf && \
     mv phpcbf /usr/local/bin
 
-RUN docker-php-ext-configure gd \
+RUN docker-php-ext-configure \
+    gd \
+    intl \
     --with-freetype-dir=/usr/include/ \
     --with-jpeg-dir=/usr/include/
 
@@ -69,7 +72,8 @@ RUN docker-php-ext-install \
     zip \
     bcmath \
     gmp \
-    exif
+    exif \
+    intl
 
 # Install composer
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
