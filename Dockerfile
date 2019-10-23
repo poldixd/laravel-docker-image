@@ -32,7 +32,8 @@ RUN apk add --no-cache \
     freetype-dev \
     libjpeg-turbo-dev \
     zlib-dev \
-    icu-dev
+    icu-dev \
+    libzip-dev
 
 # Install PECL and PEAR extensions
 RUN pecl install \
