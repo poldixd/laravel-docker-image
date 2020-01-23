@@ -1,4 +1,4 @@
-FROM php:7.3.12-cli-alpine
+FROM php:7.3.13-cli-alpine
 
 # Install dev dependencies
 RUN apk add --no-cache --virtual .build-deps \
@@ -74,6 +74,10 @@ RUN docker-php-ext-install \
     gmp \
     exif \
     intl
+
+# fix work iconv library with alphine
+RUN apk add --no-cache --repository http://dl-cdn.alpinelinux.org/alpine/edge/community/ --allow-untrusted gnu-libiconv
+ENV LD_PRELOAD /usr/lib/preloadable_libiconv.so php
 
 # Install composer
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
